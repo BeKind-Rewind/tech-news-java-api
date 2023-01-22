@@ -108,19 +108,19 @@ public class User implements Serializable {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     User user = (User) o;
-    return loggedIn == user.loggedIn &&
-            id.equals(user.id) &&
-            username.equals(user.username) &&
-            email.equals(user.email) &&
-            password.equals(user.password) &&
-            Objects.equals(posts, user.posts) &&
-            Objects.equals(votes, user.votes) &&
-            Objects.equals(comments, user.comments);
+    return isLoggedIn() == user.isLoggedIn() &&
+            Objects.equals(getId(), user.getId()) &&
+            Objects.equals(getUsername(), user.getUsername()) &&
+            Objects.equals(getEmail(), user.getEmail()) &&
+            Objects.equals(getPassword(), user.getPassword()) &&
+            Objects.equals(getPosts(), user.getPosts()) &&
+            Objects.equals(getVotes(), user.getVotes()) &&
+            Objects.equals(getComments(), user.getComments());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, email, password, loggedIn, posts, votes, comments);
+    return Objects.hash(getId(), getUsername(), getEmail(), getPassword(), isLoggedIn(), getPosts(), getVotes(), getComments());
   }
 
   @Override
