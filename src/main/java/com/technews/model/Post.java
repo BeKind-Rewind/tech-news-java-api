@@ -3,9 +3,6 @@ package com.technews.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-
-import java.io.DataInput;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +28,7 @@ public class Post implements Serializable {
   private Date postedAt = new Date();
   @NotNull
   @Temporal(TemporalType.DATE)
-  @Column(name = "posted_at")
+  @Column(name = "updated_at")
   private Date updatedAt = new Date();
   @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Comment> comments;
