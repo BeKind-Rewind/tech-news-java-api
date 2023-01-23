@@ -15,15 +15,16 @@ import java.util.List;
 public class UserController {
   @Autowired
   UserRepository repository;
+
   @Autowired
   VoteRepository voteRepository;
 
   @GetMapping("/api/users")
   public List<User> getAllUsers() {
     List<User> userList = repository.findAll();
-    for(User u : userList) {
+    for (User u : userList) {
       List<Post> postList = u.getPosts();
-      for(Post p : postList) {
+      for (Post p : postList) {
         p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
       }
     }
@@ -31,18 +32,19 @@ public class UserController {
   }
 
   @GetMapping("/api/users/{id}")
-  public User getUserById(@PathVariable Integer id){
+  public User getUserById(@PathVariable Integer id) {
     User returnUser = repository.getById(id);
     List<Post> postList = returnUser.getPosts();
-    for(Post p : postList) {
+    for (Post p : postList) {
       p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
     }
+
     return returnUser;
   }
 
   @PostMapping("/api/users")
-  public User addUser(@RequestBody User user){
-    // encrypt pass
+  public User addUser(@RequestBody User user) {
+    // Encrypt password
     user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
     repository.save(user);
     return user;
@@ -52,7 +54,7 @@ public class UserController {
   public User updateUser(@PathVariable int id, @RequestBody User user) {
     User tempUser = repository.getById(id);
 
-    if(!tempUser.equals(null)) {
+    if (!tempUser.equals(null)) {
       user.setId(tempUser.getId());
       repository.save(user);
     }
